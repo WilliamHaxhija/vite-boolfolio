@@ -9,15 +9,15 @@ export default {
     },
     data() {
         return {
-            projects: null
+            projects: []
         }
     },
     methods: {
         getProjects() {
             axios.get('http://127.0.0.1:8000/api/projects')
-            .then((response) => {
-                this.projects = response.data.results;
-            });
+                .then((response) => {
+                    this.projects = response.data.results;
+                });
         }
     },
     mounted() {
@@ -27,10 +27,12 @@ export default {
 </script>
 
 <template>
-<h3>Projects List</h3>
-<ProjectCard :projectInfo="projects"></ProjectCard>
+    <div class="container">
+        <div class="row">
+            <h3>Projects List</h3>
+            <ProjectCard v-for="project in projects" :projectInfo="project" :key="project.id"></ProjectCard>
+        </div>
+    </div>
 </template>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>
