@@ -1,8 +1,12 @@
 <script>
 import axios from 'axios';
+import ProjectCard from './ProjectCard.vue';
 
 export default {
     name: 'ProjectsList',
+    components: {
+        ProjectCard
+    },
     data() {
         return {
             projects: null
@@ -12,8 +16,7 @@ export default {
         getProjects() {
             axios.get('http://127.0.0.1:8000/api/projects')
             .then((response) => {
-                console.log(response.data.results);
-                // this.projects = 
+                this.projects = response.data.results;
             });
         }
     },
@@ -25,6 +28,7 @@ export default {
 
 <template>
 <h3>Projects List</h3>
+<ProjectCard :projectInfo="projects"></ProjectCard>
 </template>
 
 <style scoped lang="scss">
