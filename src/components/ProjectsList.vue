@@ -9,19 +9,27 @@ export default {
     },
     data() {
         return {
-            projects: []
+            projects: [],
+            currentPage: 1,
+            nextPageUrl: null
         }
     },
     methods: {
-        getProjects() {
-            axios.get('http://127.0.0.1:8000/api/projects')
+        getProjects(pageNumber) {
+            axios.get('http://127.0.0.1:8000/api/projects', {
+                params: {
+                    page: pageNumber
+                }
+            })
                 .then((response) => {
-                    this.projects = response.data.results;
+                    this.projects = response.data.results.data;
+                    this.currentPage = response.data.results.current_page;
+                    this.nextPageUrl = response.data.results.next_page_url;
                 });
         }
     },
     mounted() {
-        this.getProjects();
+        this.getProjects(this.currentPage);
     }
 }
 </script>
@@ -31,6 +39,16 @@ export default {
         <div class="row">
             <h3>Projects List</h3>
             <ProjectCard v-for="project in projects" :projectInfo="project" :key="project.id"></ProjectCard>
+            <nav class="d-flex justify-content-center">
+                <ul class="pagination">
+                    <div v-if="currentPage !== 1 && currentPage > 0">
+                        <li class="page-item" @click="getProjects(currentPage - 1)"><a class="page-link">Previous Page</a></li>
+                    </div>
+                    <div v-if="nextPageUrl">
+                        <li class="page-item" @click="getProjects(currentPage + 1)"><a class="page-link">Nex Page</a></li>
+                    </div>
+                </ul>
+            </nav>
         </div>
     </div>
 </template>
