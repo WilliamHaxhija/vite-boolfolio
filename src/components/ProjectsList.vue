@@ -10,7 +10,7 @@ export default {
     data() {
         return {
             projects: [],
-            currentPage: 1,
+            currentPage: null,
             nextPageUrl: null
         }
     },
@@ -37,7 +37,6 @@ export default {
 <template>
     <div class="container">
         <div class="row">
-            <h3>Projects List</h3>
             <ProjectCard v-for="project in projects" :projectInfo="project" :key="project.id"></ProjectCard>
             <nav class="d-flex justify-content-center">
                 <ul class="pagination">
@@ -53,4 +52,8 @@ export default {
     </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+li {
+    cursor: pointer;
+}
+</style>

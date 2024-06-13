@@ -1,18 +1,21 @@
 <script>
+import { RouterView } from 'vue-router';
+import AppHeader from './components/AppHeader.vue';
 import ProjectsList from './components/ProjectsList.vue';
 
 export default {
   components: {
-    ProjectsList
+    ProjectsList,
+    AppHeader
   }
 }
 </script>
 
 <template>
-<h1>Header</h1>
-<ProjectsList></ProjectsList>
+<AppHeader></AppHeader>
+<router-view></router-view>
 </template>
 
 <style lang="scss">
-@use './style/generic';
+
 </style>

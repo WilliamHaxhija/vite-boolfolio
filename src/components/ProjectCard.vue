@@ -2,18 +2,7 @@
 export default {
     name: 'ProjectCard',
     props: {
-        projectInfo: Array
-    },
-    printableImage: '',
-    methods: {
-        getPrintableImageString(image) {
-            if (image) {
-                this.printableImage = image.substr( 16, image.length - 1 );
-                return this.printableImage;
-            } else {
-                return 'No Image'
-            }
-        }
+        projectInfo: Object
     }
 }
 </script>
@@ -21,10 +10,16 @@ export default {
 <template>
     <div class="col-4 my-3">
         <div class="card" style="width: 18rem;">
-            <img :src="getPrintableImageString(projectInfo.cover_image)" class="card-img-top" :alt="projectInfo.name">
+            <div v-if="projectInfo.cover_image">
+                <img :src="`http://127.0.0.1:8000/storage/${projectInfo.cover_image}`" class="card-img-top" :alt="projectInfo.name">
+            </div>
+            <div v-else>
+                <img src="https://picsum.photos/300/200" class="card-img-top" alt="lorem-picsum">
+            </div>
             <div class="card-body">
                 <h5 class="card-title">{{ projectInfo.name }}</h5>
                 <p class="card-text">{{ projectInfo.summary }}</p>
+                <router-link :to="{ name: 'single-post', params: { slug: projectInfo.slug } }">Info</router-link>
             </div>
         </div>
     </div>
